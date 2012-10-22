@@ -1,0 +1,152 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <title>Lia Aran Website</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+     <!--[if IE]>
+            <script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+     <![endif]-->
+</head>
+    <body>
+        <div id="divmain">
+            <header></header>
+            <section>
+            </section>
+        </div>
+        <div class="divbottom"></div>
+        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="http://cdn.jquerytools.org/1.2.6/full/jquery.tools.min.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.1/underscore-min.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
+        <script type="text/javascript" src="scripts/xmltojson.js"></script>
+        <script type="text/javascript" src="scripts/main.js"></script>
+        <script id="header-template" type="text/template">
+            <div id="divlogomenu"  style="float:left;width:250px;">
+                <a href="#<%=Home %>" id="divlogo"></a>
+                <ul id="ulmenu">
+                <%for(var i=0;i<NavBar.length;i++) {%>
+                    <li><a id="lnk<%=NavBar[i] %>" data-id="<%=NavBar[i] %>" class="navbar" href="#<%=NavBar[i] %>"><%=NavBar[i] %></a></li>
+                <%} %>
+                </ul>
+            </div>
+            <div id="divsocial">
+                    <a id="linkedin" href="http://www.linkedin.com/pub/lia-aran/4/a66/b74" target="_blank"></a>
+                    <span id="facebook"></span>
+                    <span id="twitter"></span>
+            </div>
+            <div class="clear"></div>
+        </script>
+        <script id="home-template" type="text/template">
+        <div id="scrollable" class="scrollable">
+        <div class="items">
+        <% for (var i = 0; i < image.length; i++) {%>
+            <div><img src="images/<%= image[i] %>" alt="<%= title[i] %>" class="homepageimage" />
+            <div class="titlediv"><h1><%= title[i] %></h1></div>
+             <% var desc = description[i].replace(/{/g, '<span class="boldelement">');
+            desc = desc.replace(/}/g, '</span>'); %>
+           
+            <div class="descriptiondiv"><span><%= desc %></span></div>
+            <div class="clear"></div>
+            </div>
+        <% } %>
+        </div>
+        </div>
+        <a class="next browse right rg">next</a>
+        <a class="prev browse left lf">prev</a>
+        </script>
+        <script id="work-template" type="text/template">
+        <h1>Work</h1>
+        <% for (var j = 0; j < item.length; j++) { %>
+        <article>
+            <figure id="work<%= j %>">
+                <a href="#workdetail/<%= j %>" alt="<%=item[j].title %>" rel="#<%= item[j].image[0] %>" class="thbdetails">
+                    <img src="images/<%= item[j].thumbnail %>" alt="<%=item[j].title %>" rel="#<%= item[j].image[0] %>" border="0" />
+                </a>
+                <h2><%=item[j].title %></h2>
+            </figure>
+        </article> 
+        <% } %>
+
+         <div class="clear"></div>
+        </script>
+        <script id="about-template" type="text/template"> 
+        <h1>About</h1>
+        <% for (var j = 0; j < thumbnail.length; j++) { %>  
+            <article>
+                <h2><%= title[j] %></h2>
+                <% var tt = title[j].replace(/\s/g, '').toLowerCase();%>
+                <ul>
+                <%if  (typeof links[j].link !== 'string') {
+                   for (var i = 0; i < links[j].link.length; i++) { %>
+                             <li><a class="aboutlk" href="#AboutUs/<%=tt%>/<%=links[j].link[i].replace(/\s/g, '').toLowerCase() %>"><%=links[j].link[i] %></a></li>
+                       
+                   <% } 
+                 } else {%>
+                         <li><a class="aboutlk" href="#AboutUs/<%=tt%>/<%=links[j].link.replace(/\s/g, '').toLowerCase() %>"><%=links[j].link %></a></li>
+                 <%} %>
+                </ul>
+            </article> 
+             <% if (j % 3 == 2) {%>
+               <div class="clear"></div>
+            <%}%>
+             <% } %>
+        </script>
+        <script id="contact-template" type="text/template">
+           <h1>Contact</h1>
+           <h3><%= name %></h3>
+           <span id="position"><%= position %></span>         
+
+           <span id="email"><%= city %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: <%= email %> &nbsp;&nbsp;&nbsp;&nbsp;C: <%= cell %></span>           
+           <div class="clear"></div>
+           <table style="margin-top:40px;font: normal 14px HelveticaNeueRoman !important;">
+           <tr>
+              <td style="vertical-align:top;">
+                    <table style="height:165px;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td><label class="formlb" for="txtFirstName">First name:</label><br><input type="text" id="txtFirstName" /></td>
+                    </tr>
+                    <tr>
+                        <td><label class="formlb" for="txtLastName">Last name:</label><br><input type="text" id="txtLastName" /></td>
+                    </tr>
+                    <tr>
+                        <td><label class="formlb" for="txtEmail">Email:</label><br><input type="text" id="txtEmail" /></td>
+                    </tr>
+                    </table>
+              </td>
+              <td style="padding-left:45px;"><label class="formlb" for="txtMessage">Message:</label><br><textarea rows="7" cols="70" id="txtMessage"></textarea></td>
+          </tr>
+          <tr>
+              <td></td>
+              <td style="padding-left:45px;"><input type="submit" value="Send" id="btnSend" /></td>
+          </tr>
+          </table>
+          <div style="height:50px;"></div>        
+        
+        </script>
+        <script id="workdetails-template" type="text/template">        
+        <div id="src" class="scrollable">
+            <div class="items">               
+                   <% var images = item.image;
+                    for(var i=0;i<images.length;i++) { %>
+                      <% if (images[i]!='') { %>
+                        <div style="width:919px;height:507px;margin-left:-20px" class="hompageimage">                          
+                                <img src="images/img/<%=images[i] %>" class="homepageimage" />                            
+                        </div>
+                        <% }%>
+                    <% }%>
+            </div>
+        </div>
+        <a class="next browse right" style="background:url(images/arrows.png) no-repeat right top;width:22px;height:28px;">next</a>
+        <a class="prev browse left" style="background:url(images/arrows.png) no-repeat left top;width:22px;height:28px;">prev</a>
+        <a class="close" style="background:url(images/close.png) no-repeat left top;width:30px;height:28px;">close</a>
+        <div class="desc">
+            <h1 class="imgtitle"><%= item.title %></h1>
+            <h2 class="imgsubtitle"><%= item.subtitle %></h2>
+            <p class="imgdescription"><%= item.description %></p>
+            <p class="imgread"><%= item.read %></p>
+            <p class="imgcasestudy"><%= item.casestudy %></p>
+        </div>
+        <div style="height:60px"></div>
+        </script>
+    </body>
+</html>
